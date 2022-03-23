@@ -1,12 +1,13 @@
 import 'package:cartapp/model/products.dart';
 import 'package:get/get.dart';
 
-class CartController extends GetxController {
+class ShoppingController extends GetxController {
   // ignore: deprecated_member_use
   var products = <Product>[].obs;
+  RxDouble totalPrice1 = 0.0.obs;
 
   @override
-  void Onit() {
+  void onInit() {
     super.onInit();
     fetchProducts();
   }

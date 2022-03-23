@@ -30,6 +30,7 @@ dependencies:
   get:
   flutter:
     sdk: flutter
+  ffi: ^1.1.2
     
 
   

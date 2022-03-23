@@ -5,25 +5,23 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../controller/cart_controller.dart';
-import '../controller/cartcontroller.dart';
+import '../controller/shoppingcontroller.dart';
 
 class ShoppingPage extends StatelessWidget {
   //const ShoppingPage({Key? key}) : super(key: key);
-  final shoppingController = Get.put(CartController());
+  final shoppingController = Get.put(ShoppingController());
   final cartController = Get.put(CartAddController());
-
+  //double price1;
+  // double price1 = 0.0;
+  //CartAddController.add();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
-          icon: Icon(Icons.add_shopping_cart_rounded),
-          label: GetX<CartAddController>(builder: (controller) {
-            return Text(
-              controller.count.toString(),
-              style: TextStyle(fontSize: 25),
-            );
-          })),
+        onPressed: () {},
+        icon: Icon(Icons.add_shopping_cart_rounded),
+        label: Text("${cartController.bb.value}"),
+      ),
 
       body: SafeArea(
         //Container(
@@ -31,14 +29,19 @@ class ShoppingPage extends StatelessWidget {
 
         child: Column(children: [
           Expanded(
-            child: GetX<CartController>(builder: (controller) {
+            //child: ListView.builder(
+            //itemBuilder: (context, index) {
+            //return Card();
+            //},
+            //)
+            child: GetX<ShoppingController>(builder: (controller) {
               return ListView.builder(
                   itemCount: controller.products.length,
                   itemBuilder: (context, index) {
                     return Card(
                       margin: EdgeInsets.all(12),
                       child: Padding(
-                        padding: EdgeInsets.all(16.0),
+                        padding: EdgeInsets.all(6.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -49,25 +52,32 @@ class ShoppingPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '$controller.products[index].productName',
+                                      '${controller.products[index].productName}',
                                       style: TextStyle(fontSize: 24),
                                     ),
                                     Text(
-                                      '$controller.products[index].productName',
+                                      '${controller.products[index].productDescription}',
                                       style: TextStyle(fontSize: 24),
                                     ),
                                     Text(
-                                      '$controller.products[index].productName',
+                                      '${controller.products[index].price}',
                                       style: TextStyle(fontSize: 24),
                                     ),
                                   ],
                                 )
                               ],
                             ),
+                            //   Text("Total Amount"),
+                            SizedBox(
+                              height: 100,
+                            ),
                             RaisedButton(
                               onPressed: () {
                                 cartController
                                     .addtocart(controller.products[index]);
+                                //   price1 = cartController.add();
+                                cartController.getTotalPrice();
+                                //   print(price1);
                               },
                               color: Colors.blue,
                               textColor: Colors.white,
@@ -80,13 +90,22 @@ class ShoppingPage extends StatelessWidget {
                   });
             }),
           ),
-          GetX<CartAddController>(builder: (controller) {
-            return Text(
-              "Total amount\$ ${controller.totalPrice}}",
-              style: TextStyle(fontSize: 32),
-            );
-          }),
-          SizedBox(height: 100),
+          //  GetX<CartAddController>(builder: (controller) {
+
+          // return
+          SizedBox(
+            height: 100,
+            child: GetX<CartAddController>(builder: (controller) {
+              return Text(
+                'Total amaont\$ ${controller.bb.value}',
+                style: TextStyle(fontSize: 32),
+              );
+            }),
+          ),
+          // Text('${price1}'),
+          // }
+          //),
+          SizedBox(height: 20),
         ]),
       ),
       //),
